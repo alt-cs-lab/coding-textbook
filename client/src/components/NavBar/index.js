@@ -12,6 +12,9 @@ const Navbar = () => {
 					<NavLink to="/testpage" activeStyle>
 						Test Page
 					</NavLink>
+					<NavLink to='/LTIPage' activeStyle>
+						LTI Page
+					</NavLink>
 				</NavMenu>
 			</Nav>
 		</>
