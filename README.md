@@ -61,6 +61,8 @@ $ docker-compose up
 
 You should then be able to access the service at http://localhost:3000. 
 
+At this point the project will be port forwarded and the port will be found under the ports tab in the terminal. This link can be given to any other device to connect to the application. This link will change for each codespace.
+
 Both the client and server do hot code reloading, so you the server and/or client reboot and redeploy as you save changes in the code.  The only exception is changes to the dependencies and package file, which require a rebuild using `npm install` and through docker-compose. The server side may take a bit to load up so if the client side loads faster and says the server is not working, give it a moment and refresh the page.
 
 
