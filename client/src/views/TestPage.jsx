@@ -1,15 +1,30 @@
 import * as React from "react"
 
+const nathanClick = () => {
+	window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3Dm";
+}
+const nathanContainer = () => {
+	return (
+		<div>
+			{/* {alert('broke')} */} 
+			<h1>Nathan Herscovici</h1>
+			<p>This is the section for Nathan Herscovici, one of the members of the RAAT team</p>
+		</div> 
+	);
+}
+
 const TestPage = () => {
 	return (
 		<div>
-			<div> Gibson
+			<div>
 			</div>
-			<div> Nathan
+			<div>
+				{nathanContainer()}
+				<button type="button" onClick={nathanClick}>Don't do it</button>
 			</div>
-			<div> Nate
+			<div>
 			</div>
-			<div> Nicholas
+			<div>
 			</div>
 		</div>
 	);
