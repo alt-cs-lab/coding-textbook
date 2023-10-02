@@ -3,8 +3,14 @@ import * as React from "react"
 const TestPage = () => {
 	return (
 		<div>
-			<h1>Test page for React.</h1>
-			<body>Test.</body>
+			<div> Gibson
+			</div>
+			<div> Nathan
+			</div>
+			<div> Nate
+			</div>
+			<div> Nicholas
+			</div>
 		</div>
 	);
 };
