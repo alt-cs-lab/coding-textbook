@@ -4,12 +4,12 @@ import * as React from "react"
 
 const handleClick = () =>{
 	alert('The info gather');
-	window.location.href= 'https://en.wikipedia.org/wiki/Train';
+	window.location.href= "https://en.wikipedia.org/wiki/Train";
 };
 
 const nathanClick = () => {
 	window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3Dm";
-}
+};
 
 const nathanContainer = () => {
 	return (
@@ -20,28 +20,24 @@ const nathanContainer = () => {
 		</div> 
 	);
 
+	};
+
 
 const TestPage = () => {
 	return (
 		<div>
 			<div>
+				<button onClick={handleClick}>Nicholas button</button>
 			</div>
-			<div> 
-			</div>
-			<div> 
-			</div>
-			<div>
-				<button OnClick={handleClick}>Nicholas button</button>
 			<div>
 				{nathanContainer()}
 				<button type="button" onClick={nathanClick}>Don't do it</button>
 			</div>
-			<div>
-			</div>
-			<div>
-			</div>
 		</div>
 	);
+
 };
 
 export default TestPage;
+
+
