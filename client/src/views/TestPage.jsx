@@ -109,17 +109,17 @@ const GibsonComponent = () => {
 	);
 }
 
+
 const TestPage = () => {
+
 	return (
 		<div>
 			<div>
 				<h1>Gibson's Portion</h1>
 				<GibsonComponent />
-const TestPage = () => {
-
-	return (
-		<div>
+			</div>
 			<div> 
+				<h1>Nate's Portion</h1>
 				<ButtonTest />
 			</div>
 			<div>
