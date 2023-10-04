@@ -180,10 +180,10 @@ const TestPage = () => {
 
 			</div>
 			<div>
-				{nathanContainer()}
+				{NathanContainer()}
 				<button type="button" onClick={nathanClick}>Don't do it</button>
 			</div>
-      <div>
+	<div>
 				<h1>Gibson's Portion</h1>
 				<GibsonComponent />
 			</div>
