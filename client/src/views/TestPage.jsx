@@ -60,12 +60,12 @@ const nathanClick = () => {
 	window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3Dm";
 };
 
-const nathanContainer = () => {
+const NathanContainer = () => {
 	return (
 		<div>
-			{/* {alert('broke')} */} 
 			<h1>Nathan Herscovici</h1>
 			<p>This is the section for Nathan Herscovici, one of the members of the RAAT team</p>
+			<button type="button" onClick={nathanClick}>Don't do it</button>
 		</div> 
 	);
 
@@ -78,12 +78,14 @@ const TestPage = () => {
 		<div>
 			<div> 
 				<ButtonTest />
+			</div>
 			<div>
 				<button onClick={handleClick}>Nicholas button</button>
 			</div>
 			<div>
-				{nathanContainer()}
-				<button type="button" onClick={nathanClick}>Don't do it</button>
+				
+				<NathanContainer />
+				
 			</div>
 		</div>
 	);
