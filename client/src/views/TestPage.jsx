@@ -6,31 +6,39 @@ const handleClick = () =>{
 	window.location.href= 'https://en.wikipedia.org/wiki/Train';
 };
 
+const handleCalculate = () =>{
+	let z = calculate(val1.value, op.value ,val2.value);
+	alert("result: " + z);
+}
+
 function calculate(first, oper, last) {
 	let result;
-	if(oper.value == "+"){
-		result = first.value + last.value;
+	if((first == null && last == null) || (first == 0 && last == 0)){
+		return 0;
 	}
-	else if(oper.value == "-"){
-		result = first.value - last.value;
+	else if(oper == "+"){
+		return (parseInt(first) + parseInt(last));
 	}
-	else if(oper.value == "/"){
-		result = first.value / last.value;
+	else if(oper == "-"){
+		result = parseInt(first) - parseInt(last);
+	}
+	else if(oper == "/"){
+		result = parseInt(first) / parseInt(last);
 	}
 	else if(oper == "*"){
-		result = first.value * last.value;
+		result = parseInt(first) * parseInt(last);
 	}
 	else{
 		return -1;
 	} 
 	
-	return <h1>result</h1>;
+	return result;
 }
 
 const nicholasContainer = () => {
 	return (
 		<div>
-			<h1 align='center'>Nicholas Sternecker</h1>
+			<h1 align='left'>Nicholas Sternecker</h1>
 			<p>
 				There is no way a bee should be able to fly.<br />
 				Its wings are too small to get its fat little body off the ground.<br />
@@ -62,19 +70,20 @@ const TestPage = () => {
 		<div>
 			<div>
 				{nicholasContainer()}
-				<button OnClick={handleClick}>Nicholas button</button>
+				<button OnClick={handleClick}>Nicholas button</button><br /><br /><br /><br />
 				<label for="val1">Value 1:</label>
-				<input type="number" id="val1" name="val1"></input>
+				<input type="number" id="val1" name="val1" defaultValue={0}></input><br />
 				<label for="op"> Operator</label>
 				<select name="op" id="op">
 					<option value="+">+</option>
 					<option value="-">-</option>
 					<option value="/">/</option>
 					<option value="*">*</option>
-				</select>
+				</select> <br />
 				<label for="val2"> Value 2:</label>
-				<input type="number" id="val2" name="val2"></input>
-				<button onClick={calculate(val1, op, val2)}>Calculate</button><br/>
+				<input type="number" id="val2" name="val2" defaultValue={0}></input><br />
+				<button type="submit" onClick={handleCalculate}>Calculate</button>
+
 			</div>
 			<div>
 				{nathanContainer()}
