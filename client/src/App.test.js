@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import TestPage, { calculate } from './views/TestPage';
 
 test('renders learn react link', () => {
   render(<App />);
@@ -15,9 +16,40 @@ test('text is rendered', () => {
   expect(screen.getByText('Impossible')).toBeInTheDocument()
 })
 
-it('renders correctly', () => {
-  const tree = renderer
-    .create(<Link page="https://en.wikipedia.org/wiki/Train">Facebook</Link>)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
+describe('Test nicholas button functionality', () =>{
+  it('Test click event', () => {
+    const handleClick = jest.fn();
+
+    const button = shallow((<Button onClick={handleClick}>Nicholas button</Button>));
+    button.find('button').simulate('click');
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Test calculate button functions', () =>{
+  it('Test click event', () => {
+    const handleCalculate = jest.fn();
+
+    const button = shallow((<Button onClick={handleCalculate}>Calculate</Button>));
+    button.find('button').simulate('click');
+    expect(handleCalculate).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('calculate function call returns correct', ()=>{
+  it('calculate of 2 + 4 is six', ()=>{
+    expect(calculate("2","+","4")).toBe(6);
+  });
+
+  it('calculate of 2 - 4 is six', ()=>{
+    expect(calculate("2","-","4")).toBe(-2);
+  });
+
+  it('calculate of 2 + 4 is six', ()=>{
+    expect(calculate("2","*","4")).toBe(8);
+  });
+
+  it('calculate of 2 + 4 is six', ()=>{
+    expect(calculate("2","/","4")).toBe(0.5);
+  });
 });

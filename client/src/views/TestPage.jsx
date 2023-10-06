@@ -51,18 +51,18 @@ const ButtonTest = () => {
 
 
 
-const handleClick = () =>{
+export const handleClick = () =>{
 
 	window.location.href= 'https://en.wikipedia.org/wiki/Train';
 
 };
 
-const handleCalculate = () =>{
+export const handleCalculate = () =>{
 	let z = calculate(val1.value, op.value ,val2.value);
 	alert("result: " + z);
 }
 
-function calculate(first, oper, last) {
+export function calculate(first, oper, last) {
 	let result;
 	if((first == null && last == null) || (first == 0 && last == 0)){
 		return 0;
