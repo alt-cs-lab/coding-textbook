@@ -102,16 +102,16 @@ const nicholasContainer = () => {
 	);
 };
 
-const nathanClick = () => {
+export const nathanClick = () => {
 	window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3Dm";
 };
 
-const NathanContainer = () => {
+export const NathanContainer = () => {
 	return (
 		<div>
 			<h1>Nathan Herscovici</h1>
 			<p>This is the section for Nathan Herscovici, one of the members of the RAAT team</p>
-			<button type="button" onClick={nathanClick}>Don't do it</button>
+			<button role="testingRole" type="button" onClick={nathanClick}>Don't do it</button>
 		</div> 
 	);
 
@@ -180,8 +180,7 @@ const TestPage = () => {
 
 			</div>
 			<div>
-				{NathanContainer()}
-				<button type="button" onClick={nathanClick}>Don't do it</button>
+				<NathanContainer />
 			</div>
 	<div>
 				<h1>Gibson's Portion</h1>
@@ -193,11 +192,6 @@ const TestPage = () => {
 			</div>
 			<div>
 				<button onClick={handleClick}>Nicholas button</button>
-			</div>
-			<div>
-				
-				<NathanContainer />
-				
 			</div>
 		</div>
 	);
