@@ -102,16 +102,16 @@ const nicholasContainer = () => {
 	);
 };
 
-const nathanClick = () => {
+export const nathanClick = () => {
 	window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3Dm";
 };
 
-const NathanContainer = () => {
+export const NathanContainer = () => {
 	return (
 		<div>
 			<h1>Nathan Herscovici</h1>
 			<p>This is the section for Nathan Herscovici, one of the members of the RAAT team</p>
-			<button type="button" onClick={nathanClick}>Don't do it</button>
+			<button role="testingRole" type="button" onClick={nathanClick}>Don't do it</button>
 		</div> 
 	);
 
@@ -119,16 +119,18 @@ const NathanContainer = () => {
 
 
 
-const GibsonComponent = () => {
+export const GibsonComponent = () => {
 	// State with list of all checked item
 	const [checked, setChecked] = React.useState([]);
 	const checkList = ["Reading 1", "Reading 2", "Reading 3", "Reading 4"];
-  
 	// Add/Remove checked item from list
 	const handleCheck = (event) => {
 		var updatedList = [...checked]; //Getting the current list of checked items
 		if (event.target.checked) {
 			updatedList = [...checked, event.target.value];
+		}
+		else {
+			updatedList = updatedList.filter((item) => item !== event.target.value)
 		}
 		setChecked(updatedList);
 	};
@@ -137,18 +139,23 @@ const GibsonComponent = () => {
 	// Is used alongside .css file to strike through text
 	var isChecked = (item) =>
 	  	checked.includes(item) ? "checked-item" : "not-checked-item";
+
+
+	const items = checkList.map((item, index) => {
+		return (
+			<div key={index}>
+				<input id={'checkbox-' + index} value={item} type="checkbox" onClick={handleCheck} />
+				<label htmlFor={'checkbox-' + index} className={isChecked(item)}>{item}</label>
+			</div>
+		)
+	})
   
 	return (
 		<div className="GibsonComponent">
 			<div className="checkList">
 			<div className="title">Your CheckList:</div>
 			<div className="list-container">
-				{checkList.map((item, index) => (
-				<div key={index}>
-					<input value={item} type="checkbox" onChange={handleCheck} />
-					<span className={isChecked(item)}>{item}</span>
-				</div>
-				))}
+				{items}
 			</div>
 			</div>
 		</div>
@@ -178,8 +185,7 @@ const TestPage = () => {
 
 			</div>
 			<div>
-				{NathanContainer()}
-				<button type="button" onClick={nathanClick}>Don't do it</button>
+				<NathanContainer />
 			</div>
 	<div>
 				<h1>Gibson's Portion</h1>
@@ -191,11 +197,6 @@ const TestPage = () => {
 			</div>
 			<div>
 				<button onClick={handleClick}>Nicholas button</button>
-			</div>
-			<div>
-				
-				<NathanContainer />
-				
 			</div>
 		</div>
 	);
