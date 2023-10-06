@@ -51,18 +51,18 @@ export const ButtonTest = () => {
 
 
 
-const handleClick = () =>{
+export const handleClick = () =>{
 
 	window.location.href= 'https://en.wikipedia.org/wiki/Train';
 
 };
 
-const handleCalculate = () =>{
+export const handleCalculate = () =>{
 	let z = calculate(val1.value, op.value ,val2.value);
 	alert("result: " + z);
 }
 
-function calculate(first, oper, last) {
+export function calculate(first, oper, last) {
 	let result;
 	if((first == null && last == null) || (first == 0 && last == 0)){
 		return 0;
@@ -86,11 +86,11 @@ function calculate(first, oper, last) {
 	return result;
 }
 
-const nicholasContainer = () => {
+export const nicholasContainer = () => {
 	return (
 		<div>
 			<h1 align='left'>Nicholas Sternecker</h1>
-			<p>
+			<p id="bill">
 				There is no way a bee should be able to fly.<br />
 				Its wings are too small to get its fat little body off the ground.<br />
 				The bee, of course, flies anyway<br />
@@ -169,7 +169,7 @@ const TestPage = () => {
 		<div>
 			<div>
 				{nicholasContainer()}
-				<button OnClick={handleClick}>Nicholas button</button><br /><br /><br /><br />
+				<button type="button" OnClick={handleClick}>Nicholas button</button><br /><br /><br /><br />
 				<label for="val1">Value 1:</label>
 				<input type="number" id="val1" name="val1" defaultValue={0}></input><br />
 				<label for="op"> Operator</label>
@@ -187,7 +187,7 @@ const TestPage = () => {
 			<div>
 				<NathanContainer />
 			</div>
-	<div>
+			<div>
 				<h1>Gibson's Portion</h1>
 				<GibsonComponent />
 			</div>
@@ -196,7 +196,7 @@ const TestPage = () => {
 				<ButtonTest />
 			</div>
 			<div>
-				<button onClick={handleClick}>Nicholas button</button>
+				<NathanContainer />
 			</div>
 		</div>
 	);
