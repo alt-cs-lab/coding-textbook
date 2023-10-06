@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
-import TestPage, { calculate } from './views/TestPage';
+import TestPage, { calculate, handleCalculate, handleClick } from './views/TestPage';
 
 test('renders learn react link', () => {
   render(<App />);
@@ -9,30 +9,41 @@ test('renders learn react link', () => {
 });
 
 test('text is rendered', () => {
-  expect(screen.getByText('There is no way a bee should be able to fly.')).toBeInTheDocument()
-  expect(screen.getByText('Its wings are too small to get its fat little body off the ground.')).toBeInTheDocument()
-  expect(screen.getByText('The bee, of course, flies anyway')).toBeInTheDocument()
-  expect(screen.getByText('because bees')).toBeInTheDocument()
-  expect(screen.getByText('Impossible')).toBeInTheDocument()
-})
+  render(<TestPage />)
+  const textelement= screen.getByText(/There is no way a bee should be able to fly/);
+  expect(textelement).toBeInTheDocument();
 
-describe('Test nicholas button functionality', () =>{
-  it('Test click event', () => {
-    const handleClick = jest.fn();
+  const textelement2= screen.getByText(/Its wings are too small to get its fat little body off the ground./);
+  expect(textelement2).toBeInTheDocument();
 
-    const button = shallow((<Button onClick={handleClick}>Nicholas button</Button>));
-    button.find('button').simulate('click');
-    expect(handleClick).toHaveBeenCalledTimes(1);
+  const textelement3= screen.getByText(/The bee, of course, flies anyway/);
+  expect(textelement3).toBeInTheDocument();
+
+  const textelement4= screen.getByText(/because bees don't care what humans think is/);
+  expect(textelement3).toBeInTheDocument();
+
+  const textelement5= screen.getByText(/Impossible/);
+  expect(textelement3).toBeInTheDocument();
+});
+
+describe("nicholas button functions", () =>{
+  test('Test nicholas button functionality', () =>{
+    render(<TestPage />);
+    const nButton1 = screen.getByText('Nicholas button');
+    fireEvent.click(nButton1);
+    expect(nButton1.toHaveBeenCalled);
+
+  
   });
 });
 
+
 describe('Test calculate button functions', () =>{
   it('Test click event', () => {
-    const handleCalculate = jest.fn();
-
-    const button = shallow((<Button onClick={handleCalculate}>Calculate</Button>));
-    button.find('button').simulate('click');
-    expect(handleCalculate).toHaveBeenCalledTimes(1);
+    render(<TestPage />);
+    const calcButton1 = screen.getByText('Calculate');
+    fireEvent.submit(calcButton1);
+    expect(calcButton1.toHaveBeenCalled);
   });
 });
 
