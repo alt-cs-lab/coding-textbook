@@ -32,7 +32,7 @@ const ButtonGroup = styled.div`
   display: flex;
 `;
 
-const ButtonTest = () => {
+export const ButtonTest = () => {
 	const [active, setActive] = useState(buttontypes[0]);
 	return (
 		<ButtonGroup>
@@ -116,8 +116,6 @@ export const NathanContainer = () => {
 	);
 
 };
-
-
 
 
 
