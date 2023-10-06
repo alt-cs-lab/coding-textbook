@@ -121,7 +121,7 @@ const NathanContainer = () => {
 
 
 
-const GibsonComponent = () => {
+export const GibsonComponent = () => {
 	// State with list of all checked item
 	const [checked, setChecked] = React.useState([]);
 	const checkList = ["Reading 1", "Reading 2", "Reading 3", "Reading 4"];
