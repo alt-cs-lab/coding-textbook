@@ -125,12 +125,14 @@ export const GibsonComponent = () => {
 	// State with list of all checked item
 	const [checked, setChecked] = React.useState([]);
 	const checkList = ["Reading 1", "Reading 2", "Reading 3", "Reading 4"];
-  
 	// Add/Remove checked item from list
 	const handleCheck = (event) => {
 		var updatedList = [...checked]; //Getting the current list of checked items
 		if (event.target.checked) {
 			updatedList = [...checked, event.target.value];
+		}
+		else {
+			updatedList = updatedList.filter((item) => item !== event.target.value)
 		}
 		setChecked(updatedList);
 	};
@@ -139,18 +141,23 @@ export const GibsonComponent = () => {
 	// Is used alongside .css file to strike through text
 	var isChecked = (item) =>
 	  	checked.includes(item) ? "checked-item" : "not-checked-item";
+
+
+	const items = checkList.map((item, index) => {
+		return (
+			<div key={index}>
+				<input id={'checkbox-' + index} value={item} type="checkbox" onClick={handleCheck} />
+				<label htmlFor={'checkbox-' + index} className={isChecked(item)}>{item}</label>
+			</div>
+		)
+	})
   
 	return (
 		<div className="GibsonComponent">
 			<div className="checkList">
 			<div className="title">Your CheckList:</div>
 			<div className="list-container">
-				{checkList.map((item, index) => (
-				<div key={index}>
-					<input value={item} type="checkbox" onChange={handleCheck} />
-					<span className={isChecked(item)}>{item}</span>
-				</div>
-				))}
+				{items}
 			</div>
 			</div>
 		</div>
