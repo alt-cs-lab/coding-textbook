@@ -12,6 +12,11 @@ module.exports = async function launch(req, res) {
   // custom variables added by the LMS. We'll dump
   // these to the console so you can review them:
   console.log(req.body);
+  fetch("/api/get_lti", {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({lti: req.body})
+  })
 
   // Of especial importance for passing grades 
   // back to the LMS are the lis_result_sourcedid which 

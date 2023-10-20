@@ -4,6 +4,8 @@ const bodyParser = require( "body-parser" )
 
 const app = express()
 
+var lti_data = {}
+
 app.use( bodyParser.json() )
 
 app.get('/api/assigned-readings', (req, res) => {
@@ -14,12 +16,26 @@ app.get('/api/assigned-readings', (req, res) => {
   })
 })
 
+app.get('api/get_lti', async (req, res) => {
+  lti_data = await axios.get(req.body.lti);
+})
+
 app.get('/api/lti', (req, res) => {
   res.status(200).json({
-    0: {id: "HELLO"}
+    0: {lti: JSON.stringify(lti_data)}
   })
   console.log("SENT LTI STUFF")
 })
+
+// app.get('/api/login', (req, res) => {
+//   var sessionID = "RandomValue";
+//   console.log("Inside of /api/login")
+//   res.setHeader("Set-Cookie", `session-id=${sessionID}; lang=en-US`);
+//   sessions = {
+//       0: {id: "hello"}
+//   }
+//   res.json()
+// })
 
 // If we are serving our app through a proxy server,
 // the proxy server may be using HTTPS protocol while

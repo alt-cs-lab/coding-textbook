@@ -1,7 +1,9 @@
 import * as React from "react"
 import {useEffect, useState} from "react"
 
-const LTIPage = () => {
+const LTIPage = (propss) => {
+
+	const props = {...propss}
 
 	const [loading, setLoading] = React.useState(true)
 	const [ltiData, setLtiData] = React.useState({})
@@ -20,12 +22,12 @@ const LTIPage = () => {
 		// TODO: handle error
 	  },[])
 
-	  if(loading) return <>Loading...</>
+	//   if(loading) return <>Loading...</>
 
 	return (
 		<div>
 			<h1>LTI Test Page</h1>
-			<body>This is the Lti Data: {ltiData}</body>
+			<body>This is the cookie Data: {JSON.stringify(ltiData)}</body>
 		</div>
 	);
 };
