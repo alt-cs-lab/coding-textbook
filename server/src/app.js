@@ -17,6 +17,7 @@ app.get('/api/assigned-readings', (req, res) => {
 })
 
 app.get('api/get_lti', async (req, res) => {
+  console.log("Setting lti data")
   lti_data = await axios.get(req.body.lti);
 })
 
