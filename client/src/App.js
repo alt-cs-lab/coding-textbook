@@ -7,6 +7,7 @@ import LTIPage from './views/LTIPage';
 import AssignedReadingView from './views/AssignedReadingView'
 import { BrowserRouter as Router, Routes, Route }
     from 'react-router-dom';
+import { useEffect } from 'react';
 
 function App() {
 
