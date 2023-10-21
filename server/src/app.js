@@ -4,8 +4,6 @@ const bodyParser = require( "body-parser" )
 
 const app = express()
 
-var lti_data = {}
-
 app.use( bodyParser.json() )
 
 app.get('/api/assigned-readings', (req, res) => {
@@ -16,14 +14,9 @@ app.get('/api/assigned-readings', (req, res) => {
   })
 })
 
-app.get('api/get_lti', async (req, res) => {
-  console.log("Setting lti data")
-  lti_data = await axios.get(req.body.lti);
-})
-
 app.get('/api/lti', (req, res) => {
   res.status(200).json({
-    0: {lti: JSON.stringify(lti_data)}
+    0: {lti: JSON.stringify("Test Data")}
   })
   console.log("SENT LTI STUFF")
 })
@@ -65,5 +58,7 @@ app.post('/api/reading', async (req, res) => {
   const response = await axios.get(req.body.url);
   res.send(response.data.replace('</body>', '<script src="https://hypothes.is/embed.js" async></script></body>'))
 })
+
+app.post('/', require('./middleware/verify-lti-launch'), require('./endpoints/lti-launch'));
 
 module.exports = app;

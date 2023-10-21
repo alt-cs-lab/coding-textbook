@@ -1,6 +1,7 @@
-
 const axios = require('axios');
 const OAuth1Signature = require('oauth1-signature');
+const { post, locals } = require('../app');
+
 
 /** @module lti-launch
  * Handles an incoming LTI Launch Request
@@ -11,12 +12,7 @@ module.exports = async function launch(req, res) {
   // of variables, both from the lti standard and
   // custom variables added by the LMS. We'll dump
   // these to the console so you can review them:
-  console.log(req.body);
-  fetch("/api/get_lti", {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({lti: req.body})
-  })
+  //console.log(req.body);
 
   // Of especial importance for passing grades 
   // back to the LMS are the lis_result_sourcedid which 
@@ -91,7 +87,7 @@ module.exports = async function launch(req, res) {
     
     if(response.status == 200) {
       // a 200 status code indicates success
-      res.send(`You earned a grade of ${grade}. Your info is ${JSON.stringify(req.body)}`);
+      res.send(`You earned a grade of ${grade}. \n Name: ${JSON.stringify(req.body.lis_person_name_full)} | WID: ${JSON.stringify(req.body.lis_person_sourcedid)} | Assignment ID: ${JSON.stringify(req.body.ext_lti_assignment_id)}`);
     } else {
       console.error('Error response received', response.status);
       res.status(500).send("Server Error");

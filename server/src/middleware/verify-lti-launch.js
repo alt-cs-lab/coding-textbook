@@ -30,6 +30,7 @@ module.exports = function(req, res, next) {
       // our server.  We avoid sending details of the issue to
       // the client, as doing so can help an adversary learn 
       // more about how to counteract our security. 
+      console.error("Error here")
       console.error(err);
       res.status(401).send("Unauthorized");
       return;
