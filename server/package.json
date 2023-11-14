@@ -8,7 +8,9 @@
     "ims-lti": "github:alt-cs-lab/ims-lti",
     "node-fetch": "^3.3.0",
     "oauth1-signature": "^1.0.5",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "express-session": "^1.17.3",
+    "uid-safe": "^2.1.5"
   },
   "scripts": {
     "start": "node server.js",

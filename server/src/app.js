@@ -1,35 +1,38 @@
 const axios = require( "axios" )
 const express = require( "express" )
 const bodyParser = require( "body-parser" )
+const uid = require( "uid-safe" )
+const router = require("./endpoints/auth")
+const session = require('express-session')
+const loginRequired = require('./middleware/login-required')
 
 const app = express()
 
 app.use( bodyParser.json() )
 
-app.get('/api/assigned-readings', (req, res) => {
-  res.json({
-    0: {id: 0, title: "Intro Chapter Heading", url: "https://textbooks.cs.ksu.edu/tlcs/1-what-is-cs/embed.html"},
-    1: {id: 1, title: "Introduction", url: "https://textbooks.cs.ksu.edu/tlcs/1-what-is-cs/01-introduction/embed.html"},
-    2: {id: 2, title: "What is Computer Science?", url: "https://textbooks.cs.ksu.edu/tlcs/1-what-is-cs/04-computer-programming/embed.html"}
-  })
+app.use(session({
+  genid: function(req) {
+    return uid(18) // use UUIDs for session IDs
+  },
+  secret: 'Annotation-Group-Project',
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 60000,
+    secure: false,
+  }
+}))
+
+
+app.get('/',loginRequired,(req, res) => {
+  res.send(`Welcome ${req.session.username}!  You are authenticated :)`);
 })
 
-app.get('/api/lti', (req, res) => {
-  res.status(200).json({
-    0: {lti: JSON.stringify("Test Data")}
-  })
-  console.log("SENT LTI STUFF")
+app.get('/api',loginRequired,(req, res) => {
+  res.send(`Welcome ${req.session.username}!  You are authenticated :)`);
 })
 
-// app.get('/api/login', (req, res) => {
-//   var sessionID = "RandomValue";
-//   console.log("Inside of /api/login")
-//   res.setHeader("Set-Cookie", `session-id=${sessionID}; lang=en-US`);
-//   sessions = {
-//       0: {id: "hello"}
-//   }
-//   res.json()
-// })
+app.use('/api', router)
+
 
 // If we are serving our app through a proxy server,
 // the proxy server may be using HTTPS protocol while
@@ -59,6 +62,6 @@ app.post('/api/reading', async (req, res) => {
   res.send(response.data.replace('</body>', '<script src="https://hypothes.is/embed.js" async></script></body>'))
 })
 
-app.post('/', require('./middleware/verify-lti-launch'), require('./endpoints/lti-launch'));
+//app.post('/', require('./middleware/verify-lti-launch'), require('./endpoints/lti-launch'));
 
 module.exports = app;
