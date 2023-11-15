@@ -2,7 +2,7 @@ const axios = require('axios')
 const express = require( "express" )
 
 const router = express.Router()
-var serviceHost = encodeURIComponent('http://localhost:3000/');
+var serviceHost = encodeURIComponent('http://coding-textbook-server:3050/');
 var casHost = 'https://signin.k-state.edu/WebISO/';
 
 router.get('/login', (req, res) => {

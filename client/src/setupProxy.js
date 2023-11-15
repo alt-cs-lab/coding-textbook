@@ -7,6 +7,7 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: "http://coding-textbook-server:3050",
       changeOrigin: true,
+      autoRewrite: true,
     })
   );
 };

@@ -33,6 +33,10 @@ app.get('/api',loginRequired,(req, res) => {
 
 app.use('/api', router)
 
+app.get('/api/logged_in', (req,res) => {
+  res.send('Headers sent for parsing')
+})
+
 
 // If we are serving our app through a proxy server,
 // the proxy server may be using HTTPS protocol while
