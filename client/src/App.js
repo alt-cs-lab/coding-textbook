@@ -5,30 +5,67 @@ import Navbar from './components/NavBar/index';
 import { BrowserRouter as Router, Routes, Route, useHref }
     from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios'
+
+let config = {
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+  }
+}
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [user, setUser] = useState(undefined);
+
+  // This useEffet fetches the current user from the API server.
+  // If there is no user yet, then we load the login page from 
+  // the API server by directly setting the url in the browser.
   useEffect(() => {
-    fetch('/api').then(response => response.json()).then(data => console.log(data))
-    fetch('/api/logged_in').then(response => response.json()).then(data => console.log(data))
-  }, [])
-  if (loggedIn) {
-    return (
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path='/testpage' element={<TestPage />} />
-        </Routes>
-      </Router>
-    );
-  }
-  else {
-    return(
-      <>
-        <p>Please login test</p>
-      </>
-    )
-  }
+    console.log(user)
+    if (!user) {
+      console.log("Inside !user conditional")
+      fetch('/api/whoami')
+      .then(response => response.json())
+      .then(user => setUser(user))
+      .catch(err => window.location = "/api/login")
+    }
+    
+  }, []);
+
+  // Display a wait message or spinner if the user is 
+  // not yet logged in.
+  if(!user) return <h1>Please wait...</h1>
+
+  // If the user is logged in, go ahead and render the app.
+  // Note you may want to pass the user as props to children
+  // components.
+  return (
+    <div className="App">
+      <header className="App-header">
+        <p>Welcome {user.username}! You are authenticated :</p>
+        <a href="/api/logout">Logout</a>
+      </header>
+    </div>
+  );
+  // useEffect(() => {
+  //   axios.get('/api', config).then(response => console.log(response.json()))
+  // }, [])
+  // // if (loggedIn) {
+  //   return (
+  //     <Router>
+  //       <Navbar />
+  //       <Routes>
+  //         <Route path='/testpage' element={<TestPage />} />
+  //       </Routes>
+  //     </Router>
+  //   );
+  //}
+  // else {
+  //   return(
+  //     <>
+  //       <p>Please login test</p>
+  //     </>
+  //   )
+  // }
   
 }
 

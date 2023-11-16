@@ -2,13 +2,15 @@ const axios = require( "axios" )
 const express = require( "express" )
 const bodyParser = require( "body-parser" )
 const uid = require( "uid-safe" )
-const router = require("./endpoints/auth")
+const auth = require("./endpoints/auth")
 const session = require('express-session')
 const loginRequired = require('./middleware/login-required')
 
-const app = express()
+const app = new express()
 
 app.use( bodyParser.json() )
+
+app.set('trust proxy', 1)
 
 app.use(session({
   genid: function(req) {
@@ -16,25 +18,24 @@ app.use(session({
   },
   secret: 'Annotation-Group-Project',
   saveUninitialized: true,
+  resave: false,
   cookie: {
-    maxAge: 60000,
     secure: false,
-  }
+  },
 }))
 
+//app.use(express.static('../../client/build'))
 
-app.get('/',loginRequired,(req, res) => {
-  res.send(`Welcome ${req.session.username}!  You are authenticated :)`);
-})
 
-app.get('/api',loginRequired,(req, res) => {
-  res.send(`Welcome ${req.session.username}!  You are authenticated :)`);
-})
+const router = express.Router();
 
 app.use('/api', router)
 
-app.get('/api/logged_in', (req,res) => {
-  res.send('Headers sent for parsing')
+router.use(auth)
+
+router.get('/whoami',loginRequired,(req, res) => {
+  console.log("Username: " + req.session.username)
+  res.json({username: req.session.username});
 })
 
 
@@ -44,13 +45,13 @@ app.get('/api/logged_in', (req,res) => {
 // cause the OAuth signatures to not match.  Setting 
 // a proxy trust setting on express will have it 
 // reflect the protocol used by the proxy instead.
-var trustProxy = process.env.TRUST_PROXY;
-if(trustProxy) {
-  // The 'trust proxy' setting can either be a boolean
-  // (blanket trust any proxy) or a specific ip address
-  if(trustProxy === "true") app.set('trust proxy', true);
-  else app.set('trust proxy', trustProxy);
-}
+// var trustProxy = process.env.TRUST_PROXY;
+// if(trustProxy) {
+//   // The 'trust proxy' setting can either be a boolean
+//   // (blanket trust any proxy) or a specific ip address
+//   if(trustProxy === "true") app.set('trust proxy', true);
+//   else app.set('trust proxy', trustProxy);
+// }
 
 // We use the bodyparser middleware to process incoming
 // request bodies

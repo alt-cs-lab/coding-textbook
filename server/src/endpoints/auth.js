@@ -2,15 +2,16 @@ const axios = require('axios')
 const express = require( "express" )
 
 const router = express.Router()
-var serviceHost = encodeURIComponent('http://coding-textbook-server:3050/');
+var serviceHost = encodeURIComponent('http://localhost:3000/');
 var casHost = 'https://signin.k-state.edu/WebISO/';
 
 router.get('/login', (req, res) => {
+  console.log("Inside /login")
   res.redirect(`${casHost}login?service=${serviceHost}api/ticket`)
 });
 
 router.get('/ticket', async (req,res) => {
-  console.log("Testing")
+  console.log("Inside /ticket")
   // get the ticket from the querystring
   const ticket = req.query.ticket;
   // We need to verify this ticket with the CAS server,
@@ -31,8 +32,10 @@ router.get('/ticket', async (req,res) => {
     if(match) {
       // The username should be the first capture group, so store it in our session
       req.session.username = match[1];
-      // Then redirect them to the landing page 
+      req.session.save()
+      console.log("Successfully logged in: " +  req.session.username)
       res.redirect('/')
+      // Then redirect them to the landing page 
     } else {
       res.status(403).send('Authorization failed');
     }
