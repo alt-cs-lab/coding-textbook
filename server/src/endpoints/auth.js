@@ -10,6 +10,13 @@ router.get('/login', (req, res) => {
   res.redirect(`${casHost}login?service=${serviceHost}api/ticket`)
 });
 
+router.get('/logout', (req,res) => {
+  // Destroy the session with this app
+  req.session.destroy();
+  // Also redirect to CAS server logout to end its session
+  res.redirect(`${casHost}logout`);
+})
+
 router.get('/ticket', async (req,res) => {
   console.log("Inside /ticket")
   // get the ticket from the querystring

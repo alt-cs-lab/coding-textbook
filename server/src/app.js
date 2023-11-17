@@ -13,9 +13,6 @@ app.use( bodyParser.json() )
 app.set('trust proxy', 1)
 
 app.use(session({
-  genid: function(req) {
-    return uid(18) // use UUIDs for session IDs
-  },
   secret: 'Annotation-Group-Project',
   saveUninitialized: true,
   resave: false,
@@ -36,6 +33,10 @@ router.use(auth)
 router.get('/whoami',loginRequired,(req, res) => {
   console.log("Username: " + req.session.username)
   res.json({username: req.session.username});
+})
+
+app.get('/api/users', (req, res) => {
+  res.send("Hello")
 })
 
 

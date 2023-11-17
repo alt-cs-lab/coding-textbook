@@ -6,7 +6,7 @@ function TestPage() {
 	const [posts,setposts] = useState([]);
 
 	useEffect(() => {
-		axios.get(/API/Users)
+		axios.get('/api/users')
 		.then(response => {
 			setposts(response.data);
 		})
