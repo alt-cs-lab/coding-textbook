@@ -17,7 +17,10 @@ function TestPage() {
 
 	return (
 		<div>
-			{JSON.stringify(posts)}
+			<h1>Perusall API User Return:</h1>
+			{posts.map((post) => {
+				return(<li>ID: {post._id} / First Name: {post.firstName} / Last Name: {post.lastName} / Email: {post.email}</li>)
+			})}
 		</div>
 	)
 }

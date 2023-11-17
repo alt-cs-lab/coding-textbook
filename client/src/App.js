@@ -52,27 +52,6 @@ function App() {
       </header>
     </div>
   );
-  // useEffect(() => {
-  //   axios.get('/api', config).then(response => console.log(response.json()))
-  // }, [])
-  // // if (loggedIn) {
-  //   return (
-  //     <Router>
-  //       <Navbar />
-  //       <Routes>
-  //         <Route path='/testpage' element={<TestPage />} />
-  //       </Routes>
-  //     </Router>
-  //   );
-  //}
-  // else {
-  //   return(
-  //     <>
-  //       <p>Please login test</p>
-  //     </>
-  //   )
-  // }
-  
 }
 
 export default App;
