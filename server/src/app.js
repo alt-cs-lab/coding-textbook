@@ -35,8 +35,14 @@ router.get('/whoami',loginRequired,(req, res) => {
   res.json({username: req.session.username});
 })
 
+const config = {
+  headers: {
+    "X-Institution": process.env.INSTITUTION,
+    "X-API-TOKEN": process.env.TOKEN
+  }
+}
 app.get('/api/users', (req, res) => {
-  res.send("Hello")
+  axios.get("https://app.perusall.com/api/v1/users", config).then((response)=>res.json(response.data)).catch((err)=>console.error(err));
 })
 
 

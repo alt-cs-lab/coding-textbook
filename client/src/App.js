@@ -40,6 +40,12 @@ function App() {
   // components.
   return (
     <div className="App">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path='/testpage' element={<TestPage />} />
+         </Routes>
+       </Router>
       <header className="App-header">
         <p>Welcome {user.username}! You are authenticated :</p>
         <a href="/api/logout">Logout</a>

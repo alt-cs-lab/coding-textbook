@@ -16,11 +16,9 @@ function TestPage() {
 	}, []);
 
 	return (
-		<ul>
-			{posts.map(post => (
-				<li key={post.id}>{post.title}</li>
-			))}
-		</ul>
+		<div>
+			{JSON.stringify(posts)}
+		</div>
 	)
 }
 
