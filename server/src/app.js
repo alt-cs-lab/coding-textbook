@@ -1,35 +1,50 @@
 const axios = require( "axios" )
 const express = require( "express" )
 const bodyParser = require( "body-parser" )
+const uid = require( "uid-safe" )
+const auth = require("./endpoints/auth")
+const session = require('express-session')
+const loginRequired = require('./middleware/login-required')
 
-const app = express()
+const app = new express()
 
 app.use( bodyParser.json() )
 
-app.get('/api/assigned-readings', (req, res) => {
-  res.json({
-    0: {id: 0, title: "Intro Chapter Heading", url: "https://textbooks.cs.ksu.edu/tlcs/1-what-is-cs/embed.html"},
-    1: {id: 1, title: "Introduction", url: "https://textbooks.cs.ksu.edu/tlcs/1-what-is-cs/01-introduction/embed.html"},
-    2: {id: 2, title: "What is Computer Science?", url: "https://textbooks.cs.ksu.edu/tlcs/1-what-is-cs/04-computer-programming/embed.html"}
-  })
+app.set('trust proxy', 1)
+
+app.use(session({
+  secret: 'Annotation-Group-Project',
+  saveUninitialized: true,
+  resave: false,
+  cookie: {
+    secure: false,
+  },
+}))
+
+//app.use(express.static('../../client/build'))
+
+
+const router = express.Router();
+
+app.use('/api', router)
+
+router.use(auth)
+
+router.get('/whoami',loginRequired,(req, res) => {
+  console.log("Username: " + req.session.username)
+  res.json({username: req.session.username});
 })
 
-app.get('/api/lti', (req, res) => {
-  res.status(200).json({
-    0: {lti: JSON.stringify("Test Data")}
-  })
-  console.log("SENT LTI STUFF")
+const config = {
+  headers: {
+    "X-Institution": process.env.INSTITUTION,
+    "X-API-TOKEN": process.env.TOKEN
+  }
+}
+app.get('/api/users', (req, res) => {
+  axios.get("https://app.perusall.com/api/v1/users", config).then((response)=>res.json(response.data)).catch((err)=>console.error(err));
 })
 
-// app.get('/api/login', (req, res) => {
-//   var sessionID = "RandomValue";
-//   console.log("Inside of /api/login")
-//   res.setHeader("Set-Cookie", `session-id=${sessionID}; lang=en-US`);
-//   sessions = {
-//       0: {id: "hello"}
-//   }
-//   res.json()
-// })
 
 // If we are serving our app through a proxy server,
 // the proxy server may be using HTTPS protocol while
@@ -37,13 +52,13 @@ app.get('/api/lti', (req, res) => {
 // cause the OAuth signatures to not match.  Setting 
 // a proxy trust setting on express will have it 
 // reflect the protocol used by the proxy instead.
-var trustProxy = process.env.TRUST_PROXY;
-if(trustProxy) {
-  // The 'trust proxy' setting can either be a boolean
-  // (blanket trust any proxy) or a specific ip address
-  if(trustProxy === "true") app.set('trust proxy', true);
-  else app.set('trust proxy', trustProxy);
-}
+// var trustProxy = process.env.TRUST_PROXY;
+// if(trustProxy) {
+//   // The 'trust proxy' setting can either be a boolean
+//   // (blanket trust any proxy) or a specific ip address
+//   if(trustProxy === "true") app.set('trust proxy', true);
+//   else app.set('trust proxy', trustProxy);
+// }
 
 // We use the bodyparser middleware to process incoming
 // request bodies
@@ -59,6 +74,6 @@ app.post('/api/reading', async (req, res) => {
   res.send(response.data.replace('</body>', '<script src="https://hypothes.is/embed.js" async></script></body>'))
 })
 
-app.post('/', require('./middleware/verify-lti-launch'), require('./endpoints/lti-launch'));
+//app.post('/', require('./middleware/verify-lti-launch'), require('./endpoints/lti-launch'));
 
 module.exports = app;
